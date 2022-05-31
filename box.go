@@ -84,7 +84,9 @@ func (b *box) SumPerimeter() float64 {
 	for i := 0; i < len(b.shapes); i++ {
 		sum += Shape.CalcPerimeter(b.shapes[i])
 	}
-
+	if len(b.shapes) == 0 {
+		return 0
+	}
 	return sum
 }
 
@@ -95,13 +97,19 @@ func (b *box) SumArea() float64 {
 	for i := 0; i < len(b.shapes); i++ {
 		area += Shape.CalcArea(b.shapes[i])
 	}
-
+	if len(b.shapes) == 0 {
+		return 0
+	}
 	return area
 }
 
 // RemoveAllCircles removes all circles in the list
 // whether circles are not exist in the list, then returns an error
 func (b *box) RemoveAllCircles() error {
+	if len(b.shapes) < 1 {
+		return fmt.Errorf("No shapes")
+	}
+
 	newShapes := make([]Shape, 0)
 	for i := range b.shapes {
 		_, ok := b.shapes[i].(*Circle)
