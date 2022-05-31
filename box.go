@@ -61,7 +61,7 @@ func (b *box) ExtractByIndex(i int) (Shape, error) {
 // ReplaceByIndex allows replacing shape by index and returns removed shape.
 // whether shape by index doesn't exist or index went out of the range, then it returns an error
 func (b *box) ReplaceByIndex(i int, shape Shape) (Shape, error) {
-	if i <= len(b.shapes) {
+	if i <= len(b.shapes)-1 {
 		s := b.shapes[i]
 		b.shapes[i] = shape
 		return s, nil
@@ -75,9 +75,7 @@ func (b *box) SumPerimeter() float64 {
 	for i := 0; i < len(b.shapes); i++ {
 		sum += Shape.CalcPerimeter(b.shapes[i])
 	}
-	if len(b.shapes) == 0 {
-		return 0
-	}
+
 	return sum
 }
 
@@ -85,12 +83,9 @@ func (b *box) SumPerimeter() float64 {
 func (b *box) SumArea() float64 {
 	var area float64
 	for i := 0; i < len(b.shapes); i++ {
-		area += b.shapes[i].CalcArea()
 		area += Shape.CalcArea(b.shapes[i])
 	}
-	if len(b.shapes) == 0 {
-		return 0
-	}
+
 	return area
 }
 
