@@ -20,10 +20,6 @@ func NewBox(shapesCapacity int) *box {
 // AddShape adds shape to the box
 // returns the error in case it goes out of the shapesCapacity range.
 func (b *box) AddShape(shape Shape) error {
-	if b.shapesCapacity < 1 {
-		return fmt.Errorf("insufficient capacity")
-	}
-
 	if len(b.shapes) == b.shapesCapacity {
 		return fmt.Errorf("out of the shapesCapacity")
 	}
@@ -34,11 +30,14 @@ func (b *box) AddShape(shape Shape) error {
 // GetByIndex allows getting shape by index
 // whether shape by index doesn't exist or index went out of the range, then it returns an error
 func (b *box) GetByIndex(i int) (Shape, error) {
-	if len(b.shapes) != 0 && i < len(b.shapes) {
-		return b.shapes[i], nil
-	} else {
-		return nil, fmt.Errorf("the index is out of range")
+	if i <= len(b.shapes)-1 {
+		for l := range b.shapes {
+			if l == i {
+				return b.shapes[l], nil
+			}
+		}
 	}
+	return nil, fmt.Errorf("the index is out of range")
 }
 
 // ExtractByIndex allows getting shape by index and removes this shape from the list.
@@ -55,7 +54,6 @@ func (b *box) ExtractByIndex(i int) (Shape, error) {
 // ReplaceByIndex allows replacing shape by index and returns removed shape.
 // whether shape by index doesn't exist or index went out of the range, then it returns an error
 func (b *box) ReplaceByIndex(i int, shape Shape) (Shape, error) {
-
 	if i <= len(b.shapes) {
 		s := b.shapes[i]
 		b.shapes[i] = shape
@@ -94,10 +92,6 @@ func (b *box) SumArea() float64 {
 // RemoveAllCircles removes all circles in the list
 // whether circles are not exist in the list, then returns an error
 func (b *box) RemoveAllCircles() error {
-	if len(b.shapes) < 1 {
-		return fmt.Errorf("No shapes")
-	}
-
 	newShapes := make([]Shape, 0)
 	for i := range b.shapes {
 		_, ok := b.shapes[i].(*Circle)
