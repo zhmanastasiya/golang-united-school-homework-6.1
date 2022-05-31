@@ -52,7 +52,7 @@ func (b *box) GetByIndex(i int) (Shape, error) {
 func (b *box) ExtractByIndex(i int) (Shape, error) {
 	if i <= len(b.shapes)-1 {
 		s := b.shapes[i]
-		b.shapes = append(b.shapes[i:], b.shapes[i+1:]...)
+		b.shapes = append(b.shapes[:i], b.shapes[i+1:]...)
 		return s, nil
 	}
 	return nil, fmt.Errorf("%w", errorIndex)
