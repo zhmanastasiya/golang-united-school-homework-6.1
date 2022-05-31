@@ -7,7 +7,7 @@ import (
 
 var (
 	//errorCapacity = errors.New("out of the shapesCapacity")
-	errorIndex  = errors.New("the index is out of range")
+	//errorIndex  = errors.New("the index is out of range")
 	errorCircls = errors.New("circles are not exist in the list")
 )
 
@@ -49,33 +49,31 @@ func (b *box) GetByIndex(i int) (Shape, error) {
 		}
 	}
 
-	return nil, fmt.Errorf("%w", errorIndex)
+	return nil, fmt.Errorf("the index is out of range")
 
 }
 
 // ExtractByIndex allows getting shape by index and removes this shape from the list.
 // whether shape by index doesn't exist or index went out of the range, then it returns an error
 func (b *box) ExtractByIndex(i int) (Shape, error) {
-	var s Shape
 	if i <= len(b.shapes)-1 {
-		s = b.shapes[i]
+		s := b.shapes[i]
 		b.shapes = append(b.shapes[i:], b.shapes[i+1:]...)
 		return s, nil
 	}
-	return nil, fmt.Errorf("%w", errorIndex)
-
+	return nil, fmt.Errorf("the index is out of range")
 }
 
 // ReplaceByIndex allows replacing shape by index and returns removed shape.
 // whether shape by index doesn't exist or index went out of the range, then it returns an error
 func (b *box) ReplaceByIndex(i int, shape Shape) (Shape, error) {
 
-	if i <= len(b.shapes)-1 {
+	if i <= len(b.shapes) {
 		s := b.shapes[i]
 		b.shapes[i] = shape
 		return s, nil
 	}
-	return nil, fmt.Errorf("%w", errorIndex)
+	return nil, fmt.Errorf("the index is out of range")
 
 }
 
