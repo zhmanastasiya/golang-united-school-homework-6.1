@@ -1,14 +1,7 @@
 package golang_united_school_homework
 
 import (
-	"errors"
 	"fmt"
-)
-
-var (
-	//errorCapacity = errors.New("out of the shapesCapacity")
-	//errorIndex  = errors.New("the index is out of range")
-	errorCircls = errors.New("circles are not exist in the list")
 )
 
 // box contains list of shapes and able to perform operations on them
@@ -68,7 +61,7 @@ func (b *box) ExtractByIndex(i int) (Shape, error) {
 // whether shape by index doesn't exist or index went out of the range, then it returns an error
 func (b *box) ReplaceByIndex(i int, shape Shape) (Shape, error) {
 
-	if i <= len(b.shapes) {
+	if i <= len(b.shapes)-1 {
 		s := b.shapes[i]
 		b.shapes[i] = shape
 		return s, nil
@@ -118,7 +111,7 @@ func (b *box) RemoveAllCircles() error {
 		}
 	}
 	if len(newShapes) == len(b.shapes) {
-		return fmt.Errorf("%w", errorCircls)
+		return fmt.Errorf("circles are not exist in the list")
 	}
 	b.shapes = newShapes
 	return nil
