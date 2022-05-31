@@ -79,7 +79,7 @@ func (b *box) SumPerimeter() float64 {
 	var sum float64
 
 	for i := 0; i < len(b.shapes); i++ {
-		sum += b.shapes[i].CalcPerimeter()
+		sum += Shape.CalcPerimeter(b.shapes[i])
 	}
 	if len(b.shapes) == 0 {
 		return 0
@@ -92,7 +92,7 @@ func (b *box) SumArea() float64 {
 	var area float64
 
 	for i := 0; i < len(b.shapes); i++ {
-		area += b.shapes[i].CalcArea()
+		area += Shape.CalcArea(b.shapes[i])
 	}
 	if len(b.shapes) == 0 {
 		return 0
