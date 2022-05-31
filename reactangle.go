@@ -6,7 +6,7 @@ type Rectangle struct {
 }
 
 func (r Rectangle) CalcPerimeter() float64 {
-	return (r.Height * r.Weight) * 2
+	return 2 * (r.Height * r.Weight)
 }
 
 func (r Rectangle) CalcArea() float64 {
