@@ -6,9 +6,9 @@ import (
 )
 
 var (
-	errorCapacity = errors.New("out of the shapesCapacity")
-	errorIndex    = errors.New("the index is out of range")
-	errorCircls   = errors.New("circles are not exist in the list")
+	//errorCapacity = errors.New("out of the shapesCapacity")
+	errorIndex  = errors.New("the index is out of range")
+	errorCircls = errors.New("circles are not exist in the list")
 )
 
 // box contains list of shapes and able to perform operations on them
@@ -27,8 +27,12 @@ func NewBox(shapesCapacity int) *box {
 // AddShape adds shape to the box
 // returns the error in case it goes out of the shapesCapacity range.
 func (b *box) AddShape(shape Shape) error {
+	if b.shapesCapacity < 1 {
+		return fmt.Errorf("insufficient capacity")
+	}
+
 	if len(b.shapes) == b.shapesCapacity {
-		return fmt.Errorf("%w", errorCapacity)
+		return fmt.Errorf("out of the shapesCapacity")
 	}
 	b.shapes = append(b.shapes, shape)
 	return nil
@@ -52,8 +56,9 @@ func (b *box) GetByIndex(i int) (Shape, error) {
 // ExtractByIndex allows getting shape by index and removes this shape from the list.
 // whether shape by index doesn't exist or index went out of the range, then it returns an error
 func (b *box) ExtractByIndex(i int) (Shape, error) {
+	var s Shape
 	if i <= len(b.shapes)-1 {
-		s := b.shapes[i]
+		s = b.shapes[i]
 		b.shapes = append(b.shapes[i:], b.shapes[i+1:]...)
 		return s, nil
 	}
@@ -81,9 +86,7 @@ func (b *box) SumPerimeter() float64 {
 	for i := 0; i < len(b.shapes); i++ {
 		sum += Shape.CalcPerimeter(b.shapes[i])
 	}
-	if len(b.shapes) == 0 {
-		return 0
-	}
+
 	return sum
 }
 
@@ -94,9 +97,7 @@ func (b *box) SumArea() float64 {
 	for i := 0; i < len(b.shapes); i++ {
 		area += Shape.CalcArea(b.shapes[i])
 	}
-	if len(b.shapes) == 0 {
-		return 0
-	}
+
 	return area
 }
 
