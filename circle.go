@@ -1,4 +1,4 @@
-package golang_united_school_homeworkgo
+package golang_united_school_homework
 
 import "math"
 
